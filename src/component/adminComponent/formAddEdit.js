@@ -86,4 +86,4 @@ const mapStateToProps=(state)=>{
     categories: state.categories
   }
 }
-export default connect(mapStateToProps,null)(FormAddEdit);
+export default connect(mapStateToProps, null)(FormAddEdit);

@@ -45,7 +45,6 @@ class DashBoard extends React.Component {
         }
         arrPrTop.push({name: arrTemp[i].product.name, totalAmount: amount})
       }
-      console.log(arrPrTop)
       props.dispatch(AmountSelling(arrPrTop))
       arrPrTop.sort((a,b)=>(a.totalAmount<b.totalAmount)? 1 : ((a.totalAmount>b.totalAmount)? -1 : 0))
       let arr1=[], arr2 =[]
@@ -64,7 +63,6 @@ class DashBoard extends React.Component {
     }
   }
   render(){
-    console.log(this.props.reportData)
     return (
 	    <div className="dashBoard">
         <AdminHeader/>

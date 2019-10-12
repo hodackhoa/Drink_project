@@ -152,3 +152,31 @@
 		background-color: #c5c5c5;
 		color: black;
 	}
+	#messageAction{
+		position: fixed;
+		bottom: 5%;
+		right: 2%;
+		text-align: center;
+		box-shadow: 0 0 4px #424242;
+	}
+		#messageAction h3{
+			color: black;
+			font-family: arial;
+			font-size: 1em;
+			padding: 1em 2em;
+			font-style: italic;
+			color: #424242;
+			animation-duration: .5s;
+			background-color: white;
+			border-radius: 4px;
+		}
+	@keyframes messageAction{
+		from{
+			padding: 0 ;
+			opacity: .1;
+		}
+		to{
+			padding: 1em 2em;
+			opacity: 1;
+		}
+	}

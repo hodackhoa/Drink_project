@@ -137,6 +137,7 @@ class OrderStatus extends React.Component {
         (
           <div className='orS-orderChild orS-orderChild-btn'>
             <h4>Đã Thanh Toán</h4>
+            
           </div>
         )
       return(

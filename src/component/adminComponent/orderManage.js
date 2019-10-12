@@ -9,7 +9,11 @@ import AdminHeader from './header.js'
 import FormatNum from '../formatMoney.js'
 import FormatDate from '../formatDate.js';
 import PageNumber from '../pageNumber.js'
+import {AdminPopup} from '../../action'
 import {getOrderData} from '../../action'
+import {MesageAction} from '../../action'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 class OrderManage extends React.Component {
 	constructor(props){
@@ -19,11 +23,14 @@ class OrderManage extends React.Component {
       totalItems: 0,
       orderDetails: [],
       arrshowDetails: [],
+      keySearch: '',
+      styleInpSearch: {},
+      delayFunct: this.delayFunct,
       hasShowList: true
     }
   }
   componentDidMount(){
-    axios.get('http://localhost:3001/orders?_page=1&_limit=10')
+    axios.get('http://localhost:3001/orders?_page=1&_limit=10&_expand=user')
     .then(response=>{
       //this.props.dispatch(getOrderData(response.data))
       this.setState({
@@ -31,6 +38,12 @@ class OrderManage extends React.Component {
         orderData: response.data
       })
     })
+  }
+  componentDidUpdate(){
+    if(this.props.adminPopup.display==true){
+      this.handleChangeStatusOrder(this.props.adminPopup)
+      this.props.dispatch(AdminPopup({display:'none'}))
+    }
   }
   static getDerivedStateFromProps(props, state){
     if(props.orderData.length>0 && state.hasShowList){
@@ -44,18 +57,22 @@ class OrderManage extends React.Component {
     }
   }
   handleListNum =(numberPage)=>{
-    axios.get('http://localhost:3001/orders?_page='+ numberPage+'&_limit=10')
+    let copyState = [...this.state.arrshowDetails]
+      for(let i=0;i<copyState.length;i++){
+        copyState[i] = {display: 'none'}
+      }
+    axios.get('http://localhost:3001/orders?_page='+ numberPage+'&_limit=10&_expand=user')
     .then(response=>{
       //console.log(response.data)
       this.setState({
-        orderData: response.data
+        orderData: response.data,
+        arrshowDetails: copyState
       })
     })
-    
   }
   handleOrderStatus=(e)=>{
     if(e.target.value==2){
-      axios.get('http://localhost:3001/orders?_page=1&_limit=10')
+      axios.get('http://localhost:3001/orders?_page=1&_limit=10&_expand=user')
       .then(response=>{
         this.setState({
           orderData: response.data,
@@ -64,7 +81,7 @@ class OrderManage extends React.Component {
       })
     }
     else{
-      axios.get('http://localhost:3001/orders?_page=1&_limit=10&statusCheckout='+ e.target.value)
+      axios.get('http://localhost:3001/orders?_page=1&_limit=10&statusCheckout='+ e.target.value+'&_expand=user')
       .then(response=>{
         this.setState({
           orderData: response.data,
@@ -74,24 +91,31 @@ class OrderManage extends React.Component {
     }
   }
   handleChangeStatusOrder=(e,index,obj,code)=>{
-    let objTemp = {...obj}
-    objTemp.statusCheckout = code
-    axios.patch('http://localhost:3001/orders/'+ obj.id, objTemp)
-    .then(response=>{
-      //console.log(response.data)
-      this.state.orderData[index].statusCheckout = code
-      this.props.dispatch(getOrderData(this.state.orderData))
-      this.setState({
-        hasShowList: true
+    if(e.display){
+      let objTemp = {...obj}
+      objTemp.statusCheckout = e.code
+      axios.patch('http://localhost:3001/orders/'+ e.idDel, objTemp)
+      .then(response=>{
+        //console.log(response.data)
+        this.state.orderData[e.indexDel].statusCheckout = e.code
+        this.props.dispatch(getOrderData(this.state.orderData))
+        let alertText=(e.code===3)?'Đã hủy đơn hàng!': 'Đơn hàng được chuyển sang "Đã thanh toán"'
+        this.props.dispatch(MesageAction(alertText))
+        this.setState({
+          hasShowList: true
+        })
+      }).catch((err)=>{
+        console.log(err)
       })
-    }).catch((err)=>{
-      console.log(err)
-    })
+    }
+    else{
+      let alertText = (code===3)?'HỦY ĐƠN HÀNG ?': 'ĐƠN HÀNG ĐÃ ĐƯỢC THANH TOÁN?'
+      this.props.dispatch(AdminPopup({display:'block',idDel: obj.id, indexDel: index,code: code,alertText:alertText}))
+    }
   }
   handleShowDetail=(e,id,index)=>{
-    axios.get('http://localhost:3001/orders/'+id+'?_embed=order_details')
+    axios.get('http://localhost:3001/orders/'+id+'?_embed=order_details&_expand=user')
     .then(response=>{
-      //console.log(response.data.order_details)
       let copyState = [...this.state.arrshowDetails]
       for(let i=0;i<copyState.length;i++){
         if(i!==index){
@@ -108,6 +132,38 @@ class OrderManage extends React.Component {
       console.log(err)
     })
   }
+  //---------------------
+  delayFunct=()=>{
+    setTimeout(()=>{
+      this.setState({
+        styleInpSearch: {}
+      })
+    }, 500)
+  }
+  handleInputSearch=(e)=>{
+    this.setState({
+      keySearch: e.target.value
+    })
+  }
+  handleSearch=(e)=>{
+    if(this.state.keySearch===''){
+      this.setState({
+        styleInpSearch: {animationName: 'alertSearch'}
+      })
+      this.delayFunct()
+    }
+    else{
+      axios.get('http://localhost:3001/orders?numObj='+this.state.keySearch+'&_embed=order_details&_expand=user')
+      .then(response=>{
+        this.setState({
+          orderData: response.data,
+          totalItems: parseInt(response.data.length),
+          keySearch: ''
+
+        })
+      })
+    }
+  }
   render(){
     const listOrders = this.state.orderData.map((item,index)=>{
       this.state.arrshowDetails.push({display:'none'})
@@ -118,6 +174,7 @@ class OrderManage extends React.Component {
             <h4>{FormatDate(item.dateCreate)}</h4>
           </div>
           <div className='ordersAdmin-child'>
+            <h3>Người đặt hàng:&ensp;<span className='proNameSty'>{item.user.email}</span></h3>
             <h3>Trạng thái:
               <span className='proNameSty'>
                 &nbsp;{(item.statusCheckout===1)?'Đã thanh toán'
@@ -152,12 +209,23 @@ class OrderManage extends React.Component {
             <div id='infor-orderManage'>
               <h2>QUẢN LÝ ĐƠN HÀNG</h2>
               <h3>SỐ LƯỢNG: {this.state.totalItems}</h3>
-              <select onChange={this.handleOrderStatus}>
-                <option value={2}>Tất cả</option>
-                <option value={1}>Đã thanh toán</option>
-                <option value={0}>Chưa thanh toán</option>
-                <option value={3}>Đã hủy</option>
-              </select>
+              <div id= 'filter-Order'>
+                <select onChange={this.handleOrderStatus}>
+                  <option value={2}>Tất cả</option>
+                  <option value={1}>Đã thanh toán</option>
+                  <option value={0}>Chưa thanh toán</option>
+                  <option value={3}>Đã hủy</option>
+                </select>
+                <div id='searchOrder'>
+                  <input 
+                    style={this.state.styleInpSearch} 
+                    type='number' placeholder='Nhập mã đơn hàng' 
+                    value={this.state.keySearch} 
+                    onChange={this.handleInputSearch}
+                  />
+                  &ensp;<FontAwesomeIcon icon={faSearch} onClick={this.handleSearch}/>
+                </div>
+              </div>
             </div>
             <div id = 'list-orderManage'>
               {listOrders}
@@ -177,7 +245,8 @@ class OrderManage extends React.Component {
 const mapStateToProps=(state)=>{
   return{
     adminLogin: state.adminLogin,
-    orderData: state.orderData
+    orderData: state.orderData,
+    adminPopup: state.adminPopup
   }
 }
 const mapDispatchToProps=(dispatch)=>{

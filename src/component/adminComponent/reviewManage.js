@@ -10,6 +10,7 @@ import FormatDate from '../formatDate.js';
 import StarReview from '../starReview.js'
 import {GetData} from '../../action'
 import {AdminPopup} from '../../action'
+import {MesageAction} from '../../action'
 
 class ReviewManage extends React.Component {
 	constructor(props){
@@ -72,7 +73,9 @@ class ReviewManage extends React.Component {
       .then(response=>{
         axios.get('http://localhost:3001/products?_page='+this.state.pagePresent+'&_limit=10&_embed=product_details')
         .then(response=>{
-          this.props.dispatch(GetData(response.data))
+          //this.props.dispatch(GetData(response.data))
+          this.props.dispatch(MesageAction('Đã xóa đánh giá thành công!'))
+          //---------------------------------------------
           this.setState({
             totalItems: parseInt(response.headers['x-total-count']),
             productReviews: response.data

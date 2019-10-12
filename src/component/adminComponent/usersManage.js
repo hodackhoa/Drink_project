@@ -8,6 +8,7 @@ import AdminHeader from './header.js'
 import PageNumber from '../pageNumber.js'
 import {GetUsers} from '../../action'
 import {AdminPopup} from '../../action'
+import {MesageAction} from '../../action'
 
 class UsersManage extends React.Component {
 	constructor(props){
@@ -51,6 +52,7 @@ class UsersManage extends React.Component {
       axios.delete('http://localhost:3001/users/'+ e.idDel)
       .then(response=>{
         let usersTemp = this.state.users
+        let nameUser = usersTemp[e.indexDel].email
         usersTemp.splice(e.indexDel, 1)
         if(usersTemp.length===0){
           axios.get('http://localhost:3001/users?_page='+ (this.state.pagePresent- 1)+'&_limit=10')
@@ -62,6 +64,7 @@ class UsersManage extends React.Component {
           })
         }
         this.props.dispatch(GetUsers(usersTemp))
+        this.props.dispatch(MesageAction('Đã xóa  '+nameUser+'!'))
         ///------------set state--------------//
         this.setState({
           totalItems: (this.state.totalItems!==0)?this.state.totalItems - 1 : 0,
@@ -94,7 +97,7 @@ class UsersManage extends React.Component {
               <h3>Mật khẩu: <span>{item.password}</span></h3>
             </div>
             <div className= 'usersAdmin-child' id= 'btn-usersAdmin'>
-              <button className='btn-Default' onClick={(e)=>this.handleDel(e, item.id, (index+this.state.itemStart))}>XÓA</button>
+              <button className='btn-Default' onClick={(e)=>this.handleDel(e, item.id,index)}>XÓA</button>
             </div>
           </div>
         )

@@ -126,3 +126,9 @@ export function ReportData(data){
 		data
 	}
 }
+export function MesageAction(data){
+	return{
+		type: 'MESSAGE_ACTION',
+		data
+	}
+}

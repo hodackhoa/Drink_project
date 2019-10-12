@@ -116,6 +116,7 @@ class Admin extends React.Component {
 			      </div>
             <Logo/>
 			      <AdminFooter/>
+
 	    	</div>
 	    );
 	  }

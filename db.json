@@ -12,17 +12,13 @@
   "products": [
     {
       "id": 0,
-      "name": "Rượu Ch",
+      "name": "Rượu Chivas",
       "categoryId": 1,
       "price": "715000",
       "status": "New",
       "link": "https://i.ibb.co/yR1Xdwf/chivas.png",
       "infor": "Chivas Regal là loại rượu Whisky pha trộn của Scotland ( Blen Scotch Whisky ) . Đây là một loại đồ uống có chứa Cồn , được sản xuất từ Ngũ cốc ( Grain Whisky ) và Mạch nha ( Malt Whisky ) bằng cách lên men và chưng cất , sau đó được ủ trong những thùng gỗ sồi với một khoảng thời gian tối thiểu là 3 năm . Tại hãng rượu Chivas Brothers , tất cả các loại Whisky được lựa chọn đều được ủ trong những thùng gỗ Sồi ít nhất 12 năm tuổi",
-      "hightlights": "Rượu Chivas 18 là Dòng sản phẩm tầm trung nhưng rất được đầu tư nên có chất lượng cao, mẫu mã sản phẩm đẹp. Chivas 18 năm với dáng chai tròn cổ điển thuôn từ dưới lên trên  Nó có màu da cam rực rỡ, hương chocola, cam, chanh, gia vị và một ít vị khói mang đến một hương thơm ngát thật khác biệt.",
-      "category": {
-        "id": 1,
-        "name": "Rượu Ngoại"
-      }
+      "hightlights": "Rượu Chivas 18 là Dòng sản phẩm tầm trung nhưng rất được đầu tư nên có chất lượng cao, mẫu mã sản phẩm đẹp. Chivas 18 năm với dáng chai tròn cổ điển thuôn từ dưới lên trên  Nó có màu da cam rực rỡ, hương chocola, cam, chanh, gia vị và một ít vị khói mang đến một hương thơm ngát thật khác biệt."
     },
     {
       "id": 1,
@@ -640,7 +636,7 @@
       "totalBill": 7800000,
       "numObj": 920191142010,
       "dateCreate": "Wed Oct 09 2019 11:42:01 GMT+0700 (Indochina Time)",
-      "statusCheckout": 3,
+      "statusCheckout": 1,
       "id": 1
     },
     {
@@ -648,7 +644,7 @@
       "totalBill": 10440000,
       "numObj": 920191142320,
       "dateCreate": "Wed Oct 09 2019 11:42:32 GMT+0700 (Indochina Time)",
-      "statusCheckout": 3,
+      "statusCheckout": 1,
       "id": 2
     },
     {
@@ -672,7 +668,7 @@
       "totalBill": 8425000,
       "numObj": 920191143590,
       "dateCreate": "Wed Oct 09 2019 11:43:59 GMT+0700 (Indochina Time)",
-      "statusCheckout": 3,
+      "statusCheckout": 1,
       "id": 5
     },
     {
@@ -680,7 +676,7 @@
       "totalBill": 3250000,
       "numObj": 920191144140,
       "dateCreate": "Wed Oct 09 2019 11:44:14 GMT+0700 (Indochina Time)",
-      "statusCheckout": 1,
+      "statusCheckout": 0,
       "id": 6
     },
     {
@@ -696,7 +692,7 @@
       "totalBill": 6390000,
       "numObj": 920191146060,
       "dateCreate": "Wed Oct 09 2019 11:46:06 GMT+0700 (Indochina Time)",
-      "statusCheckout": 1,
+      "statusCheckout": 0,
       "id": 8
     },
     {
@@ -720,7 +716,7 @@
       "totalBill": 960000,
       "numObj": 920191151270,
       "dateCreate": "Wed Oct 09 2019 11:51:27 GMT+0700 (Indochina Time)",
-      "statusCheckout": 3,
+      "statusCheckout": 0,
       "id": 11
     },
     {
@@ -728,7 +724,7 @@
       "totalBill": 3900000,
       "numObj": 920191151420,
       "dateCreate": "Wed Oct 09 2019 11:51:42 GMT+0700 (Indochina Time)",
-      "statusCheckout": 3,
+      "statusCheckout": 0,
       "id": 12
     },
     {
@@ -736,7 +732,7 @@
       "totalBill": 4670000,
       "numObj": 920191152320,
       "dateCreate": "Wed Oct 09 2019 11:52:32 GMT+0700 (Indochina Time)",
-      "statusCheckout": 3,
+      "statusCheckout": 1,
       "id": 14
     },
     {
@@ -784,7 +780,7 @@
       "totalBill": 5940000,
       "numObj": 920191155130,
       "dateCreate": "Wed Oct 09 2019 11:55:13 GMT+0700 (Indochina Time)",
-      "statusCheckout": 0,
+      "statusCheckout": 1,
       "id": 20
     },
     {
@@ -848,7 +844,7 @@
       "totalBill": 5350000,
       "numObj": 920191157240,
       "dateCreate": "Wed Oct 09 2019 11:57:24 GMT+0700 (Indochina Time)",
-      "statusCheckout": 0,
+      "statusCheckout": 3,
       "id": 28
     },
     {
@@ -856,7 +852,7 @@
       "totalBill": 5640000,
       "numObj": 920191158260,
       "dateCreate": "Wed Oct 09 2019 11:58:26 GMT+0700 (Indochina Time)",
-      "statusCheckout": 1,
+      "statusCheckout": 0,
       "id": 29
     },
     {
@@ -864,7 +860,7 @@
       "totalBill": 4150000,
       "numObj": 920191158380,
       "dateCreate": "Wed Oct 09 2019 11:58:38 GMT+0700 (Indochina Time)",
-      "statusCheckout": 1,
+      "statusCheckout": 0,
       "id": 30
     },
     {
@@ -922,54 +918,6 @@
       "dateCreate": "Wed Oct 09 2019 12:03:26 GMT+0700 (Indochina Time)",
       "statusCheckout": 1,
       "id": 37
-    },
-    {
-      "userId": 3,
-      "totalBill": 1815000,
-      "numObj": 1020191816250,
-      "dateCreate": "Thu Oct 10 2019 18:16:25 GMT+0700 (Indochina Time)",
-      "statusCheckout": 0,
-      "id": 38
-    },
-    {
-      "userId": 3,
-      "totalBill": 1365000,
-      "numObj": 1020191817150,
-      "dateCreate": "Thu Oct 10 2019 18:17:15 GMT+0700 (Indochina Time)",
-      "statusCheckout": 0,
-      "id": 39
-    },
-    {
-      "userId": 3,
-      "totalBill": 1365000,
-      "numObj": 1020191818190,
-      "dateCreate": "Thu Oct 10 2019 18:18:19 GMT+0700 (Indochina Time)",
-      "statusCheckout": 0,
-      "id": 40
-    },
-    {
-      "userId": 3,
-      "totalBill": 1365000,
-      "numObj": 1020191820090,
-      "dateCreate": "Thu Oct 10 2019 18:20:09 GMT+0700 (Indochina Time)",
-      "statusCheckout": 1,
-      "id": 41
-    },
-    {
-      "userId": 3,
-      "totalBill": 3630000,
-      "numObj": 1020192227310,
-      "dateCreate": "Thu Oct 10 2019 22:27:31 GMT+0700 (Indochina Time)",
-      "statusCheckout": 0,
-      "id": 42
-    },
-    {
-      "userId": 3,
-      "totalBill": 1440000,
-      "numObj": 1020192256130,
-      "dateCreate": "Thu Oct 10 2019 22:56:13 GMT+0700 (Indochina Time)",
-      "statusCheckout": 0,
-      "id": 43
     }
   ],
   "order_details": [
@@ -1593,114 +1541,6 @@
       "amount": "10",
       "eachTotal": 6500000,
       "id": 70
-    },
-    {
-      "userId": 3,
-      "productId": 1,
-      "orderId": 38,
-      "categoryId": 1,
-      "amount": 1,
-      "eachTotal": 650000,
-      "id": 71
-    },
-    {
-      "userId": 3,
-      "productId": 0,
-      "orderId": 38,
-      "categoryId": 1,
-      "amount": 1,
-      "eachTotal": 715000,
-      "id": 72
-    },
-    {
-      "userId": 3,
-      "productId": 2,
-      "orderId": 38,
-      "categoryId": 1,
-      "amount": 1,
-      "eachTotal": 450000,
-      "id": 73
-    },
-    {
-      "userId": 3,
-      "productId": 1,
-      "orderId": 39,
-      "categoryId": 1,
-      "amount": 1,
-      "eachTotal": 650000,
-      "id": 74
-    },
-    {
-      "userId": 3,
-      "productId": 0,
-      "orderId": 39,
-      "categoryId": 1,
-      "amount": 1,
-      "eachTotal": 715000,
-      "id": 75
-    },
-    {
-      "userId": 3,
-      "productId": 1,
-      "orderId": 40,
-      "categoryId": 1,
-      "amount": 1,
-      "eachTotal": 650000,
-      "id": 76
-    },
-    {
-      "userId": 3,
-      "productId": 0,
-      "orderId": 40,
-      "categoryId": 1,
-      "amount": 1,
-      "eachTotal": 715000,
-      "id": 77
-    },
-    {
-      "userId": 3,
-      "productId": 1,
-      "orderId": 41,
-      "categoryId": 1,
-      "amount": 1,
-      "eachTotal": 650000,
-      "id": 78
-    },
-    {
-      "userId": 3,
-      "productId": 0,
-      "orderId": 41,
-      "categoryId": 1,
-      "amount": 1,
-      "eachTotal": 715000,
-      "id": 79
-    },
-    {
-      "userId": 3,
-      "productId": 17,
-      "orderId": 42,
-      "categoryId": 0,
-      "amount": 4,
-      "eachTotal": 2200000,
-      "id": 80
-    },
-    {
-      "userId": 3,
-      "productId": 0,
-      "orderId": 42,
-      "categoryId": 1,
-      "amount": 2,
-      "eachTotal": 1430000,
-      "id": 81
-    },
-    {
-      "userId": 3,
-      "productId": 14,
-      "orderId": 43,
-      "categoryId": 0,
-      "amount": 3,
-      "eachTotal": 1440000,
-      "id": 82
     }
   ]
 }

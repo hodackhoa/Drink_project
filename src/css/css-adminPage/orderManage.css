@@ -5,16 +5,43 @@
 	#infor-orderManage{
 
 	}
-		#infor-orderManage select{
+		#infor-orderManage #filter-Order{
+			display: grid;
+			grid-template-columns: auto auto;
+		}
+		#filter-Order select{
 			padding: .2em 0;
 			font-size: 1em;
+			width: 30%;
 		}
+		#filter-Order #searchOrder{
+			justify-self: end;
+		}
+			#searchOrder input{
+				animation-duration: 2s;
+				border: 1px solid #b0b0b0;
+			}
+			#searchOrder input::placeholder{
+				color: #c9c9c9;
+				font-style: italic;
+			}
+			@keyframes alertSearch{
+				from{
+					border: 1px solid red;
+					box-shadow: 0 0 3px red;
+				}
+				to{
+					border: 1px solid #b0b0b0;
+					box-shadow: none;
+				}
+			}
+		
 	#list-orderManage{
 		margin: 2em 0;
 	}
 		.orders-admin{
 			display: grid;
-			grid-template-columns: 30% 25% 20% 15%;
+			grid-template-columns: 25% 30% 20% 15%;
 			justify-content: center;
 			grid-column-gap: 2em;
 			background-color: white;

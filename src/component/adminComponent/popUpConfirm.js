@@ -7,7 +7,8 @@ class PopUpConfirm extends React.Component {
 	constructor(props){
     super(props);
     this.state={
-      showPopup: 'none'
+      showPopup: 'none',
+      alertText: 'BẠN CHẮC CHẮN MUỐN XÓA?'
     }
   }
   handleCancel=(e)=>{
@@ -21,7 +22,12 @@ class PopUpConfirm extends React.Component {
     this.props.dispatch(AdminPopup(objCopy))
   }
   static getDerivedStateFromProps(props, state){
-    return (props.popUpConfirm.display!==''&& props.popUpConfirm.display!==true)?{showPopup: props.popUpConfirm.display}:{showPopup: 'none'}
+    return (props.popUpConfirm.display!==''&& props.popUpConfirm.display!==true)?
+      {
+        showPopup: props.popUpConfirm.display,
+        alertText: (props.popUpConfirm.alertText!=undefined)? props.popUpConfirm.alertText : state.alertText
+      }
+      :{showPopup: 'none'}
   }
   render(){
     let styleAdminPopup ={
@@ -29,7 +35,7 @@ class PopUpConfirm extends React.Component {
     }
     return (
 	    <div className="adminPopup" style={styleAdminPopup}>
-        <h3>BẠN CHẮC CHẮN MUỐN XÓA?</h3>
+        <h3>{this.state.alertText}</h3>
         <button id='btn-ConfirmAdmin' onClick={this.handleConfirm}>ĐỒNG Ý</button>
         <button id='btn-CancelAdmin' onClick={this.handleCancel}>HỦY</button> 
 	    </div>

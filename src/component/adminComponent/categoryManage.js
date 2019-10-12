@@ -10,6 +10,7 @@ import {GetData} from '../../action'
 import {GetCategories } from '../../action'
 import PageNumber from '../pageNumber.js'
 import {AdminPopup} from '../../action'
+import {MesageAction} from '../../action'
 
 class CategoryManage extends React.Component {
 	constructor(props){
@@ -82,6 +83,8 @@ class CategoryManage extends React.Component {
         axios.get('http://localhost:3001/categories?_embed=products')
         .then(response=>{
           this.props.dispatch(GetCategories(response.data))
+          this.props.dispatch(MesageAction('Đã cập nhật thành công!'))
+          //------------------------------------------------
           let copyState = [...this.state.arrForm]
           let copyStateLabel = [...this.state.labelEdit]
           copyState[index] = {display: 'none'}
@@ -99,9 +102,10 @@ class CategoryManage extends React.Component {
     else{
       axios.post('http://localhost:3001/categories', objTemp)
       .then(response=>{
-        console.log(response.data)
+        //console.log(response.data)
         axios.get('http://localhost:3001/categories?_page='+this.state.pagePresent+'&_limit=10')
         .then(response=>{
+          this.props.dispatch(MesageAction('Đã thêm '+objTemp.name+' vào danh sách!'))
           this.setState({
             totalItems: parseInt(response.headers['x-total-count']),
             showAddForm: {display: 'none'},
@@ -120,6 +124,7 @@ class CategoryManage extends React.Component {
       axios.delete('http://localhost:3001/categories/'+ e.idDel)
       .then(response=>{
         let categoriesTemp = this.state.categories
+        let nameCategory = categoriesTemp[e.indexDel].name
         categoriesTemp.splice(e.indexDel, 1)
         if(categoriesTemp.length===0){
           axios.get('http://localhost:3001/categories?_page='+ (this.state.pagePresent- 1)+'&_limit=10')
@@ -131,6 +136,8 @@ class CategoryManage extends React.Component {
           })
         }
         this.props.dispatch(GetCategories(categoriesTemp))
+        this.props.dispatch(MesageAction('Đã xóa '+nameCategory+'!'))
+
         ///------------set state--------------//
         this.setState({
           totalItems: (this.state.totalItems!==0)?this.state.totalItems - 1 : 0,

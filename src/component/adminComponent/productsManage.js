@@ -12,6 +12,7 @@ import FormAddEdit from './formAddEdit'
 import PageNumber from '../pageNumber.js'
 import {AdminPopup} from '../../action'
 import {ReportData} from '../../action'
+import {MesageAction} from '../../action'
 
 
 class ProductsManage extends React.Component {
@@ -72,9 +73,10 @@ class ProductsManage extends React.Component {
     if(index!='addPro'){
       axios.patch('http://localhost:3001/products/'+ obj.id, objTemp)
       .then(response=>{
-        let productsTemp = [...this.state.products]
-        productsTemp[obj.id] = response.data
+        let productsTemp = this.state.products
+        productsTemp[index] = response.data
         this.props.dispatch(GetData(productsTemp))
+        this.props.dispatch(MesageAction('Đã cập nhật thành công!'))
         //-----------------------------------------
         let copyState = this.state.arrForm
         let copyStateLabel = [...this.state.labelEdit]
@@ -95,6 +97,7 @@ class ProductsManage extends React.Component {
         //console.log(response.data)
         axios.get('http://localhost:3001/products?_page=1&_limit=1&_expand=category')
         .then(response=>{
+          this.props.dispatch(MesageAction('Đã thêm  '+objTemp.name+'  vào danh sách sản phẩm!'))
           this.setState({
             totalItems: parseInt(response.headers['x-total-count']),
             showAddForm: {display: 'none'},
@@ -113,6 +116,7 @@ class ProductsManage extends React.Component {
       axios.delete('http://localhost:3001/products/'+ e.idDel)
       .then(response=>{
         let productsTemp = this.state.products
+        let nameProduct = productsTemp[e.indexDel].name
         productsTemp.splice(e.indexDel, 1)
         if(productsTemp.length===0){
           axios.get('http://localhost:3001/products?_page='+ (this.state.pagePresent- 1)+'&_limit=10&_expand=category')
@@ -129,6 +133,7 @@ class ProductsManage extends React.Component {
           totalItems: (this.state.totalItems!==0)?this.state.totalItems - 1 : 0,
           hasShowList: true
         })
+        this.props.dispatch(MesageAction('Đã xóa '+nameProduct+'!'))
       }).catch((err)=>{
         console.log(err)
       })
@@ -146,12 +151,21 @@ class ProductsManage extends React.Component {
     })
   }
   handleListNum=(numberPage)=>{
+    let copyState = [...this.state.arrForm]
+    let copyStateLabel = [...this.state.labelEdit]
+    for(let i=0;i<copyState.length;i++){
+      copyState[i] = {display: 'none'}
+      copyStateLabel[i] = 'CHỈNH SỬA'
+    }
     axios.get('http://localhost:3001/products?_page='+numberPage+'&_limit=10&_expand=category')
     .then(response=>{
       this.setState({
         totalItems: parseInt(response.headers['x-total-count']),
         products: response.data,
-        pagePresent: numberPage
+        pagePresent: numberPage,
+        arrForm: copyState,
+        labelEdit: copyStateLabel
+
       })
     })
   }

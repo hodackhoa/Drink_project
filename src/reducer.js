@@ -1,6 +1,6 @@
 const stateDefault = {
 											products:[],users: [], productDetail:'', orderData: [], indexNavMenu: 0,
-											userLogin:'', popUp:'none', cart: [], amountOrder:1, rePopup:true,reportData:{},
+											userLogin:'', popUp:'none', cart: [], amountOrder:1, rePopup:true,reportData:{}, messageAction: '',
 											orderCondition: [false, null, null], searchKey:'', amountSelling: [], adminPopup: {display:''},
 											adminLogin:'',autoRedirect: true, indexTabManage: 0, orderDetailsAdmin: [], categories:[]
 										}
@@ -55,7 +55,6 @@ export default function reducer(state = stateDefault, action){
 	      }
 	      var proIdCart = localStorage.getItem('productsID-Cart') //save product to Local Store//
 	      proIdCart = (proIdCart==null)? '' : proIdCart
-	      console.log(state.amountOrder)
 	      for(let i=0; i<state.amountOrder;i++){
 	      	proIdCart += action.id + "|";
 	      }
@@ -128,7 +127,6 @@ export default function reducer(state = stateDefault, action){
 			state.categories = action.data;
 			return {...state}
 		case 'ADMIN_SELLINGPRODUCTS':
-			console.log(action.data)
 			state.amountSelling = action.data;
 			return {...state}
 		case 'ADMIN_POPUP':
@@ -136,6 +134,9 @@ export default function reducer(state = stateDefault, action){
 			return {...state}
 		case 'REPORTDATA':
 			state.reportData = action.data
+			return {...state}
+		case 'MESSAGE_ACTION':
+			state.messageAction = action.data
 			return {...state}
 		default:
 			return state
