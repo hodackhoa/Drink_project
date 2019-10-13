@@ -20,7 +20,7 @@ class ListProduct extends React.Component {
     }
   }
   componentDidMount(){
-    axios.get('http://localhost:3001/products?_page=1&_limit=9&categoryId='+this.props.categoryId)
+    axios.get('http://localhost:3001/products?_page=1&_limit=9&categoryId='+this.props.categoryId+'&_embed=product_details')
     .then(response=>{
       this.setState({
         totalItems: parseInt(response.headers['x-total-count']),
@@ -32,7 +32,7 @@ class ListProduct extends React.Component {
     this.props.dispatch(showProDetail(objProduct))
   }
   handleListNum=(numberPage)=>{
-    axios.get('http://localhost:3001/products?_page='+numberPage+'&_limit=9&categoryId='+this.props.categoryId)
+    axios.get('http://localhost:3001/products?_page='+numberPage+'&_limit=9&categoryId='+this.props.categoryId+'&_embed=product_details')
     .then(response=>{
       this.setState({
         totalItems: parseInt(response.headers['x-total-count']),
@@ -55,28 +55,25 @@ class ListProduct extends React.Component {
   }
 
   render(){
-    var listNum = this.state.numberList.map((item,index)=>{
-      return(
-            <a key={index} style={{marginLeft:'.4em'}} onClick={(e)=>{this.handleListNum(index)}}>{item}</a>
-        )
-    })
-    var list1 = this.props.products.map((item,index)=>{
-      if(item.categoryId===0){
-        return (
-              <li key={index}>
-                <Link to='/productDetail' onClick={(e)=>this.handleLink(item)}>{item.name}</Link>
+    var listCate  = this.props.categories.map((item,index)=>{
+      var listProduct = this.props.products.map((item2,index2)=>{
+        if(item2.categoryId===item.id){
+          return (
+              <li key={index2}>
+                <Link to='/productDetail' onClick={(e)=>this.handleLink(item2)}>{item2.name}</Link>
               </li>
-              )
-      }
-    })
-    var list2 = this.props.products.map((item,index)=>{
-      if(item.categoryId===1){
-      return (
-          <li key={index}>
-            <Link to='/productDetail' onClick={(e)=>this.handleLink(item)}>{item.name}</Link>
-          </li>
             )
-      }
+        }
+      })
+      return(
+          <ul key={index}>
+            <li><h4>{(item.name).toUpperCase()}</h4>
+              <ul>
+                {listProduct}
+              </ul>
+            </li>
+          </ul>
+        )
     })
     var listImg = this.state.products.map((item,index)=>{
       return(
@@ -89,18 +86,7 @@ class ListProduct extends React.Component {
           <div className='listText' style={{marginTop:'2em'}}>
             <h4 style={{marginTop:'0'}}>DANH MỤC SẢN PHẨM</h4>
             <img src={require('../images/logo_Rnho.png')} />
-            <ul>
-              <li><h4>RƯỢU NGOẠI</h4>
-                <ul>
-                  {list2}
-                </ul>
-              </li>
-              <li><h4>RƯỢU VANG</h4>
-                <ul>
-                  {list1}
-                </ul>
-              </li>
-            </ul>
+            {listCate}
             <div className='newSP'>
                 <h4 style={{marginTop:'0'}}>SO SÁNH SẢN PHẨM</h4>
                 <img src={require('../images/logo_Rnho.png')} />

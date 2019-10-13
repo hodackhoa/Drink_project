@@ -118,7 +118,6 @@
 	top: 30%;
 	left: 50%;
 	transform: translateX(-50%);
-	width: 20%;
 	background-color: white;
 	border-radius: 3px;
 	box-shadow: 0 0 10px #404040;
@@ -129,7 +128,7 @@
 		margin-bottom: 1em;
 	}
 	.adminPopup button{
-		width: 30%;
+		width: 100px;
 		transition: .3s;
 		border: none;
 		outline: none;

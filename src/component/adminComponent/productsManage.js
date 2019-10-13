@@ -103,7 +103,7 @@ class ProductsManage extends React.Component {
             showAddForm: {display: 'none'},
             labelAdd: 'THÊM SẢN PHẨM',
             hideList: {display: 'block'},
-            hasShowList: true
+            //hasShowList: true
           })
         }).catch((err)=>{
           console.log(err)

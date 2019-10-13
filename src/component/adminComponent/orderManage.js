@@ -26,6 +26,9 @@ class OrderManage extends React.Component {
       keySearch: '',
       styleInpSearch: {},
       delayFunct: this.delayFunct,
+      defaultSelect: 2,
+      notifierSearch: '',
+      numberPage: 0,
       hasShowList: true
     }
   }
@@ -58,25 +61,29 @@ class OrderManage extends React.Component {
   }
   handleListNum =(numberPage)=>{
     let copyState = [...this.state.arrshowDetails]
-      for(let i=0;i<copyState.length;i++){
-        copyState[i] = {display: 'none'}
-      }
-    axios.get('http://localhost:3001/orders?_page='+ numberPage+'&_limit=10&_expand=user')
+    for(let i=0;i<copyState.length;i++){
+      copyState[i] = {display: 'none'}
+    }
+    let strCheckout=(this.state.defaultSelect===2)? '': '&statusCheckout='+this.state.defaultSelect
+    axios.get('http://localhost:3001/orders?_page='+numberPage+strCheckout+'&_limit=10&_expand=user')
     .then(response=>{
       //console.log(response.data)
       this.setState({
         orderData: response.data,
-        arrshowDetails: copyState
+        arrshowDetails: copyState,
+        numberPage: numberPage
       })
     })
   }
   handleOrderStatus=(e)=>{
+    let selectCode = parseInt(e.target.value)
     if(e.target.value==2){
       axios.get('http://localhost:3001/orders?_page=1&_limit=10&_expand=user')
       .then(response=>{
         this.setState({
           orderData: response.data,
-          totalItems: parseInt(response.headers['x-total-count'])
+          totalItems: parseInt(response.headers['x-total-count']),
+          defaultSelect:  selectCode
         })
       })
     }
@@ -85,7 +92,8 @@ class OrderManage extends React.Component {
       .then(response=>{
         this.setState({
           orderData: response.data,
-          totalItems: parseInt(response.headers['x-total-count'])
+          totalItems: parseInt(response.headers['x-total-count']),
+          defaultSelect: selectCode
         })
       })
     }
@@ -97,12 +105,18 @@ class OrderManage extends React.Component {
       axios.patch('http://localhost:3001/orders/'+ e.idDel, objTemp)
       .then(response=>{
         //console.log(response.data)
-        this.state.orderData[e.indexDel].statusCheckout = e.code
-        this.props.dispatch(getOrderData(this.state.orderData))
-        let alertText=(e.code===3)?'Đã hủy đơn hàng!': 'Đơn hàng được chuyển sang "Đã thanh toán"'
-        this.props.dispatch(MesageAction(alertText))
-        this.setState({
-          hasShowList: true
+        let strCheckout=(this.state.defaultSelect===2)? '': '&statusCheckout='+this.state.defaultSelect
+        axios.get('http://localhost:3001/orders?_page='+this.state.numberPage+'&_limit=10'+strCheckout+'&_expand=user')
+        .then(response=>{
+          this.state.orderData[e.indexDel].statusCheckout = e.code
+          this.props.dispatch(getOrderData(this.state.orderData))
+          let alertText=(e.code===3)?'Đã hủy đơn hàng!': 'Đơn hàng được chuyển sang "Đã thanh toán"'
+          this.props.dispatch(MesageAction(alertText))
+          //---------------------------------
+          this.setState({
+            orderData: response.data,
+            totalItems: parseInt(response.headers['x-total-count'])
+          })
         })
       }).catch((err)=>{
         console.log(err)
@@ -155,12 +169,25 @@ class OrderManage extends React.Component {
     else{
       axios.get('http://localhost:3001/orders?numObj='+this.state.keySearch+'&_embed=order_details&_expand=user')
       .then(response=>{
-        this.setState({
-          orderData: response.data,
-          totalItems: parseInt(response.data.length),
-          keySearch: ''
+        if(response.data.length>0){
+          this.setState({
+            orderData: response.data,
+            totalItems: parseInt(response.data.length),
+            keySearch: '',
+            defaultSelect: 'search',
+            notifierSearch: ''
+          })
+        }
+        else{
+          this.setState({
+            orderData: response.data,
+            totalItems: parseInt(response.data.length),
+            keySearch: '',
+            defaultSelect: 'search',
+            notifierSearch: 'Không tìm thấy đơn hàng có mã '+this.state.keySearch+' trong hệ thống!',
 
-        })
+          })
+        }
       })
     }
   }
@@ -174,7 +201,7 @@ class OrderManage extends React.Component {
             <h4>{FormatDate(item.dateCreate)}</h4>
           </div>
           <div className='ordersAdmin-child'>
-            <h3>Người đặt hàng:&ensp;<span className='proNameSty'>{item.user.email}</span></h3>
+            <h3>Khách hàng:&ensp;<span className='proNameSty'>{item.user.email}</span></h3>
             <h3>Trạng thái:
               <span className='proNameSty'>
                 &nbsp;{(item.statusCheckout===1)?'Đã thanh toán'
@@ -210,11 +237,13 @@ class OrderManage extends React.Component {
               <h2>QUẢN LÝ ĐƠN HÀNG</h2>
               <h3>SỐ LƯỢNG: {this.state.totalItems}</h3>
               <div id= 'filter-Order'>
-                <select onChange={this.handleOrderStatus}>
+                <select onChange={this.handleOrderStatus} value={this.state.defaultSelect}>
                   <option value={2}>Tất cả</option>
                   <option value={1}>Đã thanh toán</option>
                   <option value={0}>Chưa thanh toán</option>
                   <option value={3}>Đã hủy</option>
+                  {(this.state.defaultSelect==='search')?
+                    <option value= 'search'></option>: null}
                 </select>
                 <div id='searchOrder'>
                   <input 
@@ -234,6 +263,7 @@ class OrderManage extends React.Component {
               amountItem = {10}
               totalItems={this.state.totalItems}
               handleListNum={this.handleListNum}
+              notifierSearch={this.state.notifierSearch}
             />
           </div>
           <AdminFooter/>

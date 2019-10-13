@@ -24,7 +24,12 @@ class FormAddEdit extends React.Component {
   }
   handleSelectCate=(e)=>{
     let copyState = {...this.state.product}
-    delete copyState.category
+    for(let i=0;i<this.props.categories.length;i++){
+      if(this.props.categories[i].id===parseInt(e.target.value)){
+        copyState.category = this.props.categories[i]
+      }
+    }
+    //copyState.category = this.props.categories[index]
     copyState.categoryId = parseInt(e.target.value)
     this.setState({
       product: copyState,
@@ -66,7 +71,7 @@ class FormAddEdit extends React.Component {
           </div>
           <div className='formGr'>
             <label htmlFor='category'>Loại</label>
-            <select onChange={this.handleSelectCate} value = {this.state.product.categoryId}>
+            <select onChange={(e)=>this.handleSelectCate(e)} value = {this.state.product.categoryId}>
               {categoriesList}
             </select>
           </div>

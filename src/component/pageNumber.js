@@ -54,6 +54,7 @@ class PageNumber extends React.Component {
 		})
 		return (
 			<div className='pageNumber' style ={stylePageNum}>
+				{(this.props.notifierSearch!=='')? <h3 style={{textAlign:'center', fontStyle:'italic', color:'#005e70'}}>{this.props.notifierSearch}</h3>:null}
 				{listNum}
 			</div>
 		);

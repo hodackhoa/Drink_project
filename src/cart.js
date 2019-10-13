@@ -183,7 +183,7 @@ class Cart extends React.Component {
             </div>
           </div>
           <div id='alertCartPopUp' style={this.state.popUpCart}>
-            <h3>TỔNG TIỀN ĐƠN HÀNG:&nbsp;<span style={{fontFamily: 'UTM Caviar', color: '#e6ae48'}}>{FormatNum(this.state.totalPay)}<sup>đ</sup></span></h3>
+            <h3>TỔNG GIÁ TRỊ ĐƠN HÀNG:&nbsp;<span style={{fontFamily: 'UTM Caviar', color: '#e6ae48'}}>{FormatNum(this.state.totalPay)}<sup>đ</sup></span></h3>
             <h4>Hình thức thanh toán: <span>Tiền mặt</span></h4>
             <button onClick={this.handleOrderConfirm}>ĐỒNG Ý</button>
             <button onClick={this.handleClosePopup}>ĐỂ SAU</button>
