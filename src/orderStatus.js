@@ -41,7 +41,7 @@ class OrderStatus extends React.Component {
   static getDerivedStateFromProps(props,state){
     var orderTemp=[]
     if(props.orderCondition[0]){
-      const res = axios.delete("http://localhost:3001/orders/"+ props.orderCondition[2])
+      const res = axios.delete("https://my-server-189.herokuapp.com/orders/"+ props.orderCondition[2])
       state.orderData.splice(props.orderCondition[1],1)
       orderTemp = [...state.orderData]
       props.dispatch(clearOrderData(false, null))
@@ -78,7 +78,7 @@ class OrderStatus extends React.Component {
         })
       }
       else{
-        axios.patch("http://localhost:3001/orders/"+e.target.id, {statusCheckout: 1})
+        axios.patch("https://my-server-189.herokuapp.com/orders/"+e.target.id, {statusCheckout: 1})
         .then(response=>{
           this.state.orderData.splice(index,1)
           this.setState({
@@ -102,7 +102,7 @@ class OrderStatus extends React.Component {
   handleHistoryOrders=(e)=>{
     if(this.state.historyStatus){
       e.target.innerHTML = 'Đơn hàng chưa thanh toán'
-      axios.get("http://localhost:3001/orders?userId="+this.props.userLogin.id+'&statusCheckout=1'+"&_embed=order_details")
+      axios.get("https://my-server-189.herokuapp.com/orders?userId="+this.props.userLogin.id+'&statusCheckout=1'+"&_embed=order_details")
       .then(response=>{
         this.setState({
           orderData: response.data,

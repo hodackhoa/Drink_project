@@ -38,13 +38,13 @@ import {GetCategories } from './action'
 
 class App extends React.Component {
 	componentDidMount(){
-    axios.get('http://localhost:3001/products?_embed=product_details&_expand=category')
+    axios.get('https://my-server-189.herokuapp.com/products?_embed=product_details&_expand=category')
     .then(response=>{
     	this.props.dispatch(GetData(response.data))
     }).catch((err)=>{
     	console.log(err)
     })
-    axios.get('http://localhost:3001/categories?_embed=products')
+    axios.get('https://my-server-189.herokuapp.com/categories?_embed=products')
     .then(response=>{
     	this.props.dispatch(GetCategories(response.data))
     }).catch((err)=>{
@@ -53,7 +53,7 @@ class App extends React.Component {
   }
   componentDidUpdate(){
   	if(this.props.userLogin!=''){
-	  	axios.get("http://localhost:3001/orders?userId="+this.props.userLogin.id+'&statusCheckout=0'+"&_embed=order_details")
+	  	axios.get("https://my-server-189.herokuapp.com/orders?userId="+this.props.userLogin.id+'&statusCheckout=0'+"&_embed=order_details")
 	    .then(response=>{
 	      this.props.dispatch(getOrderData(response.data))
 	    }).catch((err)=>{

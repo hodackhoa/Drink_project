@@ -26,7 +26,7 @@ class ReviewManage extends React.Component {
     }
   }
   componentDidMount(){
-    axios.get('http://localhost:3001/products?_page=1&_limit=10&_embed=product_details')
+    axios.get('https://my-server-189.herokuapp.com/products?_page=1&_limit=10&_embed=product_details')
     .then(response=>{
       this.setState({
         totalItems: parseInt(response.headers['x-total-count']),
@@ -41,7 +41,7 @@ class ReviewManage extends React.Component {
     }
   }
   handleListNum=(numberPage)=>{
-    axios.get('http://localhost:3001/products?_page='+numberPage+'&_limit=10&_embed=product_details')
+    axios.get('https://my-server-189.herokuapp.com/products?_page='+numberPage+'&_limit=10&_embed=product_details')
     .then(response=>{
       this.setState({
         totalItems: parseInt(response.headers['x-total-count']),
@@ -69,9 +69,9 @@ class ReviewManage extends React.Component {
   }
   handleDel=(e,id)=>{
     if(e.display){
-      axios.delete('http://localhost:3001/product_details/'+ e.idDel)
+      axios.delete('https://my-server-189.herokuapp.com/product_details/'+ e.idDel)
       .then(response=>{
-        axios.get('http://localhost:3001/products?_page='+this.state.pagePresent+'&_limit=10&_embed=product_details')
+        axios.get('https://my-server-189.herokuapp.com/products?_page='+this.state.pagePresent+'&_limit=10&_embed=product_details')
         .then(response=>{
           //this.props.dispatch(GetData(response.data))
           this.props.dispatch(MesageAction('Đã xóa đánh giá thành công!'))

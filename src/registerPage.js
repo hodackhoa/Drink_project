@@ -104,26 +104,30 @@ class Register extends React.Component {
     };
 
     togglePopup = (e,obj)=> {
+        e.preventDefault();
         if( obj.firstName!= null && obj.lastName!= null && obj.email!= null &&obj.password!= null && obj.password === obj.rePassword){
-            const user = this.props.listUser.find( x=> x.email === obj.email);
-            if(user){
-                e.preventDefault();
-                this.setState({
-                    button:'OK',
-                    text:'TÀI KHOẢN ĐÃ TỒN TẠI, VUI LÒNG THỬ LẠI!',
-                    showPopup: {display: 'block'},
-                    check:false
-                });
-            }else{
-                e.preventDefault();
-                this.setState({
+            //const user = this.props.listUser.find( x=> x.email === obj.email);
+          axios.get('https://my-server-189.herokuapp.com/users?email='+ obj.email)
+          .then(response=>{
+            if(response.data.length>0){              
+              this.setState({
+                  button:'OK',
+                  text:'TÀI KHOẢN ĐÃ TỒN TẠI, VUI LÒNG THỬ LẠI!',
+                  showPopup: {display: 'block'},
+                  check:false
+              });
+            }
+            else{
+              this.setState({
                 button:'OK',
                 text:'ĐĂNG KÝ THÀNH CÔNG!',
                 showPopup:  {display: 'block'},
                 check:true
-            });
+              })
             }
-        }else {
+          })       
+        }
+        else {
             e.preventDefault();
             this.setState({
                 errors: this.validator.validate(this.state)
@@ -131,10 +135,10 @@ class Register extends React.Component {
         }
     };
 
-    hangdleSubmit = (e,obj) =>{
+    handleSubmit = (e,obj) =>{
         e.preventDefault()
         if(obj.check){
-            axios.post('http://localhost:3001/users',
+            axios.post('https://my-server-189.herokuapp.com/users',
             {
                 firstName:obj.firstName,
                 lastName:obj.lastName,
@@ -218,7 +222,7 @@ class Register extends React.Component {
                     </form>  
                 </div>
             </div>
-            <Popup showPopup={this.state.showPopup} text={this.state.text} button={this.state.button} closePopup={(e)=>this.hangdleSubmit(e,this.state)}/>
+            <Popup showPopup={this.state.showPopup} text={this.state.text} button={this.state.button} closePopup={(e)=>this.handleSubmit(e,this.state)}/>
             <Redirect to={this.state.linkLogin}/>
             <Logo/>
             <Footer/>

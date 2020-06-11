@@ -460,9 +460,17 @@
 				margin: 1em 0 2em !important;
 			}
 			.orders-admin{
-				grid-template-columns: auto auto auto 10% !important;
+				grid-template-columns: repeat(2,1fr) !important;
+				grid-template-rows: auto;
 				grid-column-gap: 0 !important;
 				font-size: .75em;
+			}
+			#filter-Order select{
+				width: 40% !important;
+			}
+			.ordersAdmin-details{
+				grid-column: 1/3 !important;
+				grid-row: 3 !important;
 			}
 		.usersManage-main{
 			grid-column: 1/3 !important;
@@ -512,4 +520,11 @@
 			.reviews-admin{
 				font-size: .75em;
 			}
+	.adminPopup{
+		width: 60%;
+		padding: 1em 1em !important;
+	}
+	.adminPopup button{
+		width: 40% !important;
+	}
 }

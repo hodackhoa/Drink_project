@@ -7,19 +7,20 @@ import {getCartLocal} from '../action'
 import ResponsiveMenu from './responsiveMenu.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
-import {ResponsiveChange} from '../action'
+import MediaQuery from 'react-responsive'
 
 class NavMenu extends React.Component {
 	constructor(props){
     super(props);
     this.state={
       hasGetlocal: true,
-      showNav: {display: ''}
+      showNav: {display: ''},
+      showNav480: {display: 'none'}
     }
   }
   handleShowNavMenu=(e)=>{
     this.setState({
-      showNav: (this.state.showNav.display==='block')?{display: 'none'}:{display: 'block'}
+      showNav480: (this.state.showNav480.display==='block')?{display: 'none'}:{display: 'block'}
     })
   }
 	componentDidMount(){
@@ -46,21 +47,34 @@ class NavMenu extends React.Component {
     }
   }
   render(){
+    const ulMenu = (
+        <ul>
+          <li><Link to='/'>TRANG CHỦ</Link></li>
+          <li><Link to='/redWine'>RƯỢU VANG</Link></li>
+          <li><Link to='/interWine'>RƯỢU NGOẠI</Link></li>
+          <li><Link to='/information'>THÔNG TIN</Link></li>
+          <li><Link to='/blog'>BLOG</Link></li> 
+          <li><Link to='/contact'>LIÊN HỆ</Link></li>
+        </ul>
+      )
+    const resposiveMenu =()=> (
+      <div className="menubar">
+        <img src={require('../images/logo_1.png')}/>
+        <MediaQuery minDeviceWidth={640}>
+          <nav style={this.state.showNav}>
+            {ulMenu}
+          </nav>
+        </MediaQuery>
+        <MediaQuery minDeviceWidth={480} maxDeviceWidth={639}>
+          <button id= 'menuBar480' onClick={this.handleShowNavMenu}><FontAwesomeIcon icon={faBars}/></button>
+          <nav style={this.state.showNav480}>
+            {ulMenu}
+          </nav>
+        </MediaQuery>
+      </div>
+    )
     return (
-	     <div className="menubar">
-        <button id= 'menuBar480' onClick={this.handleShowNavMenu}><FontAwesomeIcon icon={faBars}/></button>
-	     	<img src={require('../images/logo_1.png')}/>
-	     	<nav style={this.state.showNav}>
-	      	<ul>
-	      		<li><Link to='/'>TRANG CHỦ</Link></li>
-	      		<li><Link to='/redWine'>RƯỢU VANG</Link></li>
-	      		<li><Link to='/interWine'>RƯỢU NGOẠI</Link></li>
-	      		<li><Link to='/information'>THÔNG TIN</Link></li>
-	      		<li><Link to='/blog'>BLOG</Link></li> 
-	      		<li><Link to='/contact'>LIÊN HỆ</Link></li>
-	      	</ul>
-	      </nav>
-	     </div>
+	     resposiveMenu()
     );
   }
 }

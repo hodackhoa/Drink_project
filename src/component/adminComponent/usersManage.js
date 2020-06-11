@@ -20,7 +20,7 @@ class UsersManage extends React.Component {
     }
   }
   componentDidMount(){
-    axios.get('http://localhost:3001/users?_page=1&_limit=10')
+    axios.get('https://my-server-189.herokuapp.com/users?_page=1&_limit=10')
     .then(response=>{
       this.setState({
         totalItems: parseInt(response.headers['x-total-count']),
@@ -38,7 +38,7 @@ class UsersManage extends React.Component {
     return (props.users.length>0 && state.hasShowList)? {users: props.users, hasShowList: false} : null
   }
   handleListNum=(numberPage)=>{
-    axios.get('http://localhost:3001/users?_page='+numberPage+'&_limit=10')
+    axios.get('https://my-server-189.herokuapp.com/users?_page='+numberPage+'&_limit=10')
     .then(response=>{
       this.setState({
         totalItems: parseInt(response.headers['x-total-count']),
@@ -49,13 +49,13 @@ class UsersManage extends React.Component {
   }
   handleDel=(e,id,index)=>{
     if(e.display){
-      axios.delete('http://localhost:3001/users/'+ e.idDel)
+      axios.delete('https://my-server-189.herokuapp.com/users/'+ e.idDel)
       .then(response=>{
         let usersTemp = this.state.users
         let nameUser = usersTemp[e.indexDel].email
         usersTemp.splice(e.indexDel, 1)
         if(usersTemp.length===0){
-          axios.get('http://localhost:3001/users?_page='+ (this.state.pagePresent- 1)+'&_limit=10')
+          axios.get('https://my-server-189.herokuapp.com/users?_page='+ (this.state.pagePresent- 1)+'&_limit=10')
           .then(response=>{
             this.setState({
               totalItems: parseInt(response.headers['x-total-count']),

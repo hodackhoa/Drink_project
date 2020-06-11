@@ -33,7 +33,7 @@ class OrderManage extends React.Component {
     }
   }
   componentDidMount(){
-    axios.get('http://localhost:3001/orders?_page=1&_limit=10&_expand=user')
+    axios.get('https://my-server-189.herokuapp.com/orders?_page=1&_limit=10&_expand=user')
     .then(response=>{
       //this.props.dispatch(getOrderData(response.data))
       this.setState({
@@ -65,7 +65,7 @@ class OrderManage extends React.Component {
       copyState[i] = {display: 'none'}
     }
     let strCheckout=(this.state.defaultSelect===2)? '': '&statusCheckout='+this.state.defaultSelect
-    axios.get('http://localhost:3001/orders?_page='+numberPage+strCheckout+'&_limit=10&_expand=user')
+    axios.get('https://my-server-189.herokuapp.com/orders?_page='+numberPage+strCheckout+'&_limit=10&_expand=user')
     .then(response=>{
       //console.log(response.data)
       this.setState({
@@ -78,7 +78,7 @@ class OrderManage extends React.Component {
   handleOrderStatus=(e)=>{
     let selectCode = parseInt(e.target.value)
     if(e.target.value==2){
-      axios.get('http://localhost:3001/orders?_page=1&_limit=10&_expand=user')
+      axios.get('https://my-server-189.herokuapp.com/orders?_page=1&_limit=10&_expand=user')
       .then(response=>{
         this.setState({
           orderData: response.data,
@@ -88,7 +88,7 @@ class OrderManage extends React.Component {
       })
     }
     else{
-      axios.get('http://localhost:3001/orders?_page=1&_limit=10&statusCheckout='+ e.target.value+'&_expand=user')
+      axios.get('https://my-server-189.herokuapp.com/orders?_page=1&_limit=10&statusCheckout='+ e.target.value+'&_expand=user')
       .then(response=>{
         this.setState({
           orderData: response.data,
@@ -102,11 +102,11 @@ class OrderManage extends React.Component {
     if(e.display){
       let objTemp = {...obj}
       objTemp.statusCheckout = e.code
-      axios.patch('http://localhost:3001/orders/'+ e.idDel, objTemp)
+      axios.patch('https://my-server-189.herokuapp.com/orders/'+ e.idDel, objTemp)
       .then(response=>{
         //console.log(response.data)
         let strCheckout=(this.state.defaultSelect===2)? '': '&statusCheckout='+this.state.defaultSelect
-        axios.get('http://localhost:3001/orders?_page='+this.state.numberPage+'&_limit=10'+strCheckout+'&_expand=user')
+        axios.get('https://my-server-189.herokuapp.com/orders?_page='+this.state.numberPage+'&_limit=10'+strCheckout+'&_expand=user')
         .then(response=>{
           this.state.orderData[e.indexDel].statusCheckout = e.code
           this.props.dispatch(getOrderData(this.state.orderData))
@@ -128,7 +128,7 @@ class OrderManage extends React.Component {
     }
   }
   handleShowDetail=(e,id,index)=>{
-    axios.get('http://localhost:3001/orders/'+id+'?_embed=order_details&_expand=user')
+    axios.get('https://my-server-189.herokuapp.com/orders/'+id+'?_embed=order_details&_expand=user')
     .then(response=>{
       let copyState = [...this.state.arrshowDetails]
       for(let i=0;i<copyState.length;i++){
@@ -167,7 +167,7 @@ class OrderManage extends React.Component {
       this.delayFunct()
     }
     else{
-      axios.get('http://localhost:3001/orders?numObj='+this.state.keySearch+'&_embed=order_details&_expand=user')
+      axios.get('https://my-server-189.herokuapp.com/orders?numObj='+this.state.keySearch+'&_embed=order_details&_expand=user')
       .then(response=>{
         if(response.data.length>0){
           this.setState({

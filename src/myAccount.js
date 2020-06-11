@@ -35,11 +35,11 @@ class MyAccount extends React.Component {
     else{
       var tempObjLogin = {...userLogin};
       delete tempObjLogin.user_details;
-      axios.patch('http://localhost:3001/users/'+ tempObjLogin.id, tempObjLogin)
+      axios.patch('https://my-server-189.herokuapp.com/users/'+ tempObjLogin.id, tempObjLogin)
       .then(response=>{
         if(this.props.user_detail.length==0){
           user_details.userId = userLogin.id
-          axios.post('http://localhost:3001/user_details', user_details)
+          axios.post('https://my-server-189.herokuapp.com/user_details', user_details)
           .then(response=>{
             //// code here
           }).catch((err)=>{
@@ -47,7 +47,7 @@ class MyAccount extends React.Component {
           })
         }
         else{
-          axios.patch('http://localhost:3001/user_details/'+ user_details.id, user_details)
+          axios.patch('https://my-server-189.herokuapp.com/user_details/'+ user_details.id, user_details)
           .then(response=>{
             //// code here
           }).catch((err)=>{

@@ -90,7 +90,7 @@ class Cart extends React.Component {
       dateCreate: dateCreate,
       statusCheckout: 0
      }
-    axios.post('http://localhost:3001/orders', order)
+    axios.post('https://my-server-189.herokuapp.com/orders', order)
     .then(response=>{
       for(let i = 0; i<this.props.cart.length; i++){
         let orderDetail = {
@@ -101,9 +101,9 @@ class Cart extends React.Component {
           amount: this.props.cart[i].amount,
           eachTotal: this.props.cart[i].eachTotal
         }
-        axios.post('http://localhost:3001/order_details', orderDetail)
+        axios.post('https://my-server-189.herokuapp.com/order_details', orderDetail)
         .then(response=>{
-          axios.get("http://localhost:3001/orders?userId="+this.props.userLogin.id+'&statusCheckout=0'+"&_embed=order_details")
+          axios.get("https://my-server-189.herokuapp.com/orders?userId="+this.props.userLogin.id+'&statusCheckout=0'+"&_embed=order_details")
           .then(response=>{
             this.props.dispatch(getOrderData(response.data))
             localStorage.removeItem("productsID-Cart") //clear local store

@@ -20,7 +20,7 @@ class ListProduct extends React.Component {
     }
   }
   componentDidMount(){
-    axios.get('http://localhost:3001/products?_page=1&_limit=9&categoryId='+this.props.categoryId+'&_embed=product_details')
+    axios.get('https://my-server-189.herokuapp.com/products?_page=1&_limit=9&categoryId='+this.props.categoryId+'&_embed=product_details')
     .then(response=>{
       this.setState({
         totalItems: parseInt(response.headers['x-total-count']),
@@ -32,7 +32,7 @@ class ListProduct extends React.Component {
     this.props.dispatch(showProDetail(objProduct))
   }
   handleListNum=(numberPage)=>{
-    axios.get('http://localhost:3001/products?_page='+numberPage+'&_limit=9&categoryId='+this.props.categoryId+'&_embed=product_details')
+    axios.get('https://my-server-189.herokuapp.com/products?_page='+numberPage+'&_limit=9&categoryId='+this.props.categoryId+'&_embed=product_details')
     .then(response=>{
       this.setState({
         totalItems: parseInt(response.headers['x-total-count']),

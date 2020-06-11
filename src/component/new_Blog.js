@@ -31,10 +31,10 @@ class New_Blog extends React.Component {
 					</p>
 					<a href='#' title='read_more'>Read more...</a>
 					<div className='img'>
-						<img src={require('../images/timthumb_2.jpg')}/>
+						<img src={require('../images/logo.jpg')}/>
 					</div>
-					<h5>GIANG LT</h5>
-					<i>Graphic design</i>
+					<h5></h5>
+					<i></i>
 				</div> 
 			</div>
 		);

@@ -57,14 +57,13 @@ class Contact extends React.Component {
                     <h5>LIÊN HỆ</h5>
                     <p>
                         <img src={require('./images/icon_address.png')} />
-                        Tầng 4, Tòa nhà Hanoi Group  Số 442 Đội Cấn, 
-                        P. Cống Vị, Q. Ba Đình, Hà Nội
-                        <img src={require('./images/icon_phone.png')} />(04) 6674 2332-<img src={require('./images/icon_phone.png')} />
-                        (04) 3786 8904  
+                        Da Nang, Viet Nam
+                        <img src={require('./images/icon_phone.png')} />0358706867<img src={require('./images/icon_phone.png')} />
+                        0358706867
                     </p>
                     <p>
                     <img src={require('./images/icon_mail.png')} />
-                        <a href='#' target="_blank" title="web">Support@bizweb.vn</a>
+                        <a href='#' target="_blank" title="web">hodackhoa@gmail.com</a>
                     </p>
                     <h2>FOLLOW US</h2>
                     <ul>

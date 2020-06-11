@@ -39,20 +39,19 @@ class Footer extends React.Component {
 						<h5>LIÊN HỆ</h5>
 						<p>
 							<img src={require('../images/icon_address.png')} />
-							Tầng 4, Tòa nhà Hanoi Group  Số 442 Đội Cấn, 
-							P. Cống Vị, Q. Ba Đình, Hà Nội
-							<img src={require('../images/icon_phone.png')} />(04) 6674 2332-<img src={require('../images/icon_phone.png')} />
-							(04) 3786 8904	
+							
+							<img src={require('../images/icon_phone.png')} /><img src={require('../images/icon_phone.png')} />
+							
 						</p>
 						<p>
-							<img src={require('../images/icon_phone.png')} />(08) 6680 9686<img src={require('../images/icon_mail.png')} />
-							<a href='#' target="_blank" title="web">Support@bizweb.vn</a>
+							<img src={require('../images/icon_phone.png')} />0358796867<img src={require('../images/icon_mail.png')} />
+							<a href='#' target="_blank" title="web">hodackhoa@gmail.com</a>
 						</p>
 					</div>
 				</div>
 				<div className='footer_icon'>
 					<div className='row'>
-						<p>© Copyright 2008-2014 DKT Technology JSC</p>
+						<p>© Copyright hodackhoa@gmail.com</p>
 						<ul>
 						  	<li><a href="#" target="_blank" title="mastercard"><img src={require('../images/icon_mastercard.png')} /></a></li>
 							<li><a href="#" target="_blank" title="visa"><img src={require('../images/icon_visa.png')} /></a></li>

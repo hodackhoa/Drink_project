@@ -114,10 +114,10 @@ class ProductDetail extends React.Component {
           }
         }
         if(product_details_Inf.userId===this.props.userLogin.id&&product_details_Inf.productId===this.state.productDetail.id){
-          axios.patch('http://localhost:3001/product_details/'+ product_details_Inf.id , dataComment)
+          axios.patch('https://my-server-189.herokuapp.com/product_details/'+ product_details_Inf.id , dataComment)
           .then(response=>{
             //console.log(response.data)
-              axios.get('http://localhost:3001/products/'+response.data.productId+'?_embed=product_details')
+              axios.get('https://my-server-189.herokuapp.com/products/'+response.data.productId+'?_embed=product_details')
               .then(response=>{
                 //console.log(response.data)
                 this.props.dispatch(showProDetail(response.data))
@@ -133,10 +133,10 @@ class ProductDetail extends React.Component {
           })
         }
         else{
-          axios.post('http://localhost:3001/product_details', dataComment)
+          axios.post('https://my-server-189.herokuapp.com/product_details', dataComment)
           .then(response=>{
             //console.log(response.data)
-              axios.get('http://localhost:3001/products/'+response.data.productId+'?_embed=product_details')
+              axios.get('https://my-server-189.herokuapp.com/products/'+response.data.productId+'?_embed=product_details')
               .then(response=>{
                 //console.log(response.data)
                 this.props.dispatch(showProDetail(response.data))
@@ -164,7 +164,7 @@ class ProductDetail extends React.Component {
     else{
       this.props.dispatch(PopUp('block'))
     }
-    axios.get('http://localhost:3001/products?_embed=product_details')
+    axios.get('https://my-server-189.herokuapp.com/products?_embed=product_details')
     .then(response=>{
       this.props.dispatch(GetData(response.data))
     }).catch((err)=>{

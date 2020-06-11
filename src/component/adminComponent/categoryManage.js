@@ -30,11 +30,11 @@ class CategoryManage extends React.Component {
     }
   }
   componentDidMount(){
-    axios.get('http://localhost:3001/categories?_page=1&_limit=10')
+    axios.get('https://my-server-189.herokuapp.com/categories?_page=1&_limit=10')
     .then(response=>{
       let arrTemp =[]
       for(let i=0;i<response.data.length;i++){
-        axios.get('http://localhost:3001/products?_page=1&_limit=1&categoryId='+response.data[i].id)
+        axios.get('https://my-server-189.herokuapp.com/products?_page=1&_limit=1&categoryId='+response.data[i].id)
         .then(response2=>{
           arrTemp.push(response2.headers['x-total-count'])
           this.setState({
@@ -77,10 +77,10 @@ class CategoryManage extends React.Component {
     let objTemp = {...obj}
     delete objTemp.products;
     if(index!='addCategory'){
-      axios.patch('http://localhost:3001/categories/'+ obj.id, objTemp)
+      axios.patch('https://my-server-189.herokuapp.com/categories/'+ obj.id, objTemp)
       .then(response=>{
         //console.log(response.data)
-        axios.get('http://localhost:3001/categories?_embed=products')
+        axios.get('https://my-server-189.herokuapp.com/categories?_embed=products')
         .then(response=>{
           this.props.dispatch(GetCategories(response.data))
           this.props.dispatch(MesageAction('Đã cập nhật thành công!'))
@@ -100,10 +100,10 @@ class CategoryManage extends React.Component {
       })
     }
     else{
-      axios.post('http://localhost:3001/categories', objTemp)
+      axios.post('https://my-server-189.herokuapp.com/categories', objTemp)
       .then(response=>{
         //console.log(response.data)
-        axios.get('http://localhost:3001/categories?_page='+this.state.pagePresent+'&_limit=10')
+        axios.get('https://my-server-189.herokuapp.com/categories?_page='+this.state.pagePresent+'&_limit=10')
         .then(response=>{
           this.props.dispatch(MesageAction('Đã thêm '+objTemp.name+' vào danh sách!'))
           this.setState({
@@ -121,13 +121,13 @@ class CategoryManage extends React.Component {
   }
   handleDel=(e,id, index)=>{
     if(e.display){
-      axios.delete('http://localhost:3001/categories/'+ e.idDel)
+      axios.delete('https://my-server-189.herokuapp.com/categories/'+ e.idDel)
       .then(response=>{
         let categoriesTemp = this.state.categories
         let nameCategory = categoriesTemp[e.indexDel].name
         categoriesTemp.splice(e.indexDel, 1)
         if(categoriesTemp.length===0){
-          axios.get('http://localhost:3001/categories?_page='+ (this.state.pagePresent- 1)+'&_limit=10')
+          axios.get('https://my-server-189.herokuapp.com/categories?_page='+ (this.state.pagePresent- 1)+'&_limit=10')
           .then(response=>{
             this.setState({
               totalItems: parseInt(response.headers['x-total-count']),
@@ -160,7 +160,7 @@ class CategoryManage extends React.Component {
     })
   }
   handleListNum=(numberPage)=>{
-    axios.get('http://localhost:3001/categories?_page='+numberPage+'&_limit=10')
+    axios.get('https://my-server-189.herokuapp.com/categories?_page='+numberPage+'&_limit=10')
     .then(response=>{
       this.setState({
         totalItems: parseInt(response.headers['x-total-count']),

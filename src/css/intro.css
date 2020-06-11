@@ -40,7 +40,7 @@
 }
 .intro .container button
 {
-    ffont-family: "Times New Roman", Times, serif;
+    font-family: "Times New Roman", Times, serif;
     font-size: 12pt;
     background-color: #000000;
     color: #ffffff;
@@ -58,8 +58,9 @@
 
 .intro .container .bg_intro
 {
-    margin-bottom: -40%;
     margin-top: 10%;
+    position: relative;
+    height: 1300px;
 }
 
 
@@ -70,18 +71,20 @@
 
 .intro .container .bg_intro .card
 {   
-    position: relative;
+    position: absolute;
     background-color: #ffffff;
-    transform: translateY(-65%);
-    max-width: 1000px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 75%;
     margin: auto;
     display: grid;
     grid-template-columns: 50% 50%;
+    padding: 60px 60px;
 }
 
 .intro .container .bg_intro .card .card_img 
 {   
-    transform: translate(15%, 10%);
+   text-align: center;
 }
 
 .intro .container .bg_intro .card .card_img img
@@ -115,8 +118,6 @@
     /* transform: translate(15%,10%); */
     /* float: right; */
     /* padding: 76px 50px 0 0; */
-    transform: translateY(10%);
-    text-align: left;
 
 }
 
@@ -163,7 +164,7 @@
     color: #959595;
     font-size: 14pt;
     font-style: normal; 
-    width: 70%;
+    width: 95%;
     margin-top: 10%;
 }
 
@@ -177,24 +178,24 @@
 .intro .container .bg_intro .card .card_intro td
 {
     width: 200px;
-}
-
-.intro .container .bg_intro .card .card_intro .table span
-{
-    float: none;
-    margin: 0;
-}
-
-
-.intro .container .bg_intro .card .card_intro .table p
-{
-    font-family: 'Times New Roman';
-    font-size: 14pt;
+    padding: .6em 0;
+    font-family: UTM Caviar;
+    font-size: 30pt;
     color:  #e6ae48;
     text-align: center;
     margin: 0 0 10% 10%;
-    font-style: normal;
 }
+.intro .container .bg_intro .card .card_intro table br{
+    display: block;
+    content: "";
+    margin-bottom: -20px;
+}
+.intro .container .bg_intro .card .card_intro .table span
+{
+    font-family: 'Times New Roman';
+    font-size: 15pt;
+}
+
 
 
 

@@ -5,11 +5,15 @@ class PageNumber extends React.Component {
     super(props);
     this.state={
       styleNum: [],
-      stopPushNum: true
+      stopPushNum: true,
+      hasRun: true
     }
   }
   componentDidMount(){
   	this.handleSplitPage(null,0)
+  }
+  componentWillUnmount(){
+
   }
 	handleSplitPage=(e,index)=>{
 		//window.scrollTo(0,0)

@@ -8,16 +8,39 @@ class Intro extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			inforIntro:{name:"",link:"",infor:"", price:''}
+			inforIntro:{name:"",link:"",infor:"", price:''},
+			dateObj: { date : "", hour:"", minute:"", second: "00"},
+			hasIntro: false
 		}
 	}
 	static getDerivedStateFromProps(props, state) {
-		if(props.inforIntro.length > 0){
+		if(props.inforIntro.length > 0 && !state.hasIntro){
+			let index = Math.floor(Math.random()*props.inforIntro.length)
 			return {
-				inforIntro: (props.inforIntro[props.inforIntro.length-1]!==undefined)?props.inforIntro[props.inforIntro.length-1]:state.inforIntro
+				inforIntro: (props.inforIntro[index]!==undefined)?props.inforIntro[index]:state.inforIntro,
+				hasIntro: true
 			}
 		}
 		return null;
+	}
+	componentDidMount(){
+		this.loopTimes();
+	}
+	showDate=()=>{
+		let newDate = new Date();
+		let copyState = {...this.state.dateObj};
+		copyState.date=newDate.getDate();
+		copyState.hour = newDate.getHours();
+		copyState.minute = newDate.getMinutes();
+		copyState.second =newDate.getSeconds();
+		this.setState({
+			dateObj: copyState
+		})
+	}
+	loopTimes=()=>{
+		setInterval((e)=>{
+			this.showDate();
+		}, 1000)
 	}
 	render() {
 		return (
@@ -27,9 +50,9 @@ class Intro extends React.Component {
 							<img src={require('../images/null.png')}/>
 							<h4>GIỚI THIỆU<br/><img src={require('../images/logo_intro.png')}/></h4>
 							<p> 
-								Mriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui 
-								faciteorum claritatem. Investigtiones demonstraverunt lectores legere me lius quod ii legunt saepius.Claritas est etiam processus dynamicus, 
-								qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putam
+								Rượu vang là một loại thức uống có cồn được lên men từ nho. 
+								Sự cân bằng hóa học tự nhiên nho cho phép nho lên men không cần thêm các loại đường, axit, enzym, nước hoặc chất dinh dưỡng khác. 
+								Men tiêu thụ đường trong nho và chuyển đổi chúng thành rượu và carbon dioxit. 
 							</p>
 							<button>XEM THÊM</button>
 						</div>
@@ -45,7 +68,7 @@ class Intro extends React.Component {
 								<div className='card_intro'>
 									<h5>{(this.state.inforIntro.name).toUpperCase()}</h5>
 									<img src={require('../images/logo_Rnho.png')}/><br/>
-									<span>330.000<sup>đ</sup></span>
+									<span>{FormatNum(this.state.inforIntro.price)}<sup>đ</sup></span>
 									<AddToCart id= {this.state.inforIntro.id}/>
 									<p>
 										{this.state.inforIntro.infor}
@@ -53,12 +76,12 @@ class Intro extends React.Component {
 									<table className='table' border='1' bordercolor='#e6ae48'>
 										<tbody>
 											<tr>
-												<td><span>334</span><p>NGÀY</p></td>
-												<td><span>26</span><p>GIỜ</p></td>
+												<td>{(this.state.dateObj.date<10)? ("0" + this.state.dateObj.date) : this.state.dateObj.date}<br/><span>NGÀY</span></td>
+												<td>{(this.state.dateObj.hour<10)? ("0" + this.state.dateObj.hour) : this.state.dateObj.hour}<br/><span>GIỜ</span></td>
 											</tr>
 											<tr>
-												<td><span>60</span><p>PHÚT</p></td>
-												<td><span>15</span><p>GIÂY</p></td>
+												<td>{(this.state.dateObj.minute<10)? ("0" + this.state.dateObj.minute) : this.state.dateObj.minute}<br/><span>PHÚT</span></td>
+												<td>{(this.state.dateObj.second<10)? ("0" + this.state.dateObj.second) : this.state.dateObj.second}<br/><span>GIÂY</span></td>
 											</tr>
 										</tbody>
 									</table>

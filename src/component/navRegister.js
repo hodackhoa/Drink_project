@@ -76,7 +76,7 @@ class NavRegister extends React.Component{
     let infLocalUser = localStorage.getItem("inforLogin")
     if(props.userLogin=='' && infLocalUser!= null){
       infLocalUser = infLocalUser.split("|")
-      axios.get('http://localhost:3001/users?email='+infLocalUser[0]+'&password='+infLocalUser[1]+'&_embed=user_details')
+      axios.get('https://my-server-189.herokuapp.com/users?email='+infLocalUser[0]+'&password='+infLocalUser[1]+'&_embed=user_details')
       .then(response=>{
         //console.log(response.data)
         if(response.data.length>0){

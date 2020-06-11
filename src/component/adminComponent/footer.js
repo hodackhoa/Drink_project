@@ -12,19 +12,20 @@ class AdminFooter extends React.Component {
       showMessage: {display: 'none'},
       styleMessage: {},
       hasShow: true,
+      timer: '',
       delayShow: ()=>{this.delayShow()}
     }
   }
   delayShow=()=>{
-    setTimeout(()=>{
+    this.state.timer = setTimeout(()=>{
       this.props.dispatch(MesageAction(''))
       this.setState({
-        showMessage: {display: 'none'}
+        showMessage: {display: 'none'},
       })
     },3000)
   }
   static getDerivedStateFromProps(props, state){
-    if(props.messageAction!==''){
+    if(props.messageAction!=='' && state.hasShow){
       state.delayShow();
       return {
         message: props.messageAction,
@@ -35,6 +36,9 @@ class AdminFooter extends React.Component {
     else{
       return null
     }
+  }
+  componentWillUnmount(){
+    clearTimeout(this.state.timer)
   }
   render(){
     return (

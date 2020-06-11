@@ -31,16 +31,17 @@ class ProductsManage extends React.Component {
       hasShowList: false
     }
   }
-  componentDidMount(){
-    axios.get('http://localhost:3001/products?_page=1&_limit=10&_expand=category')
+  /*componentDidMount(){
+    console.log('run didmount')
+    axios.get('https://my-server-189.herokuapp.com/products?_page=1&_limit=10&_expand=category')
     .then(response=>{
-      this.props.dispatch(ReportData({amountProducts: response.headers['x-total-count']}))
+      //this.props.dispatch(ReportData({amountProducts: response.headers['x-total-count']}))
       this.setState({
         totalItems: parseInt(response.headers['x-total-count']),
         products: response.data
       })
     })
-  }
+  }*/
   componentDidUpdate(){
     if(this.props.adminPopup.display==true){
       this.handleDel(this.props.adminPopup)
@@ -71,7 +72,7 @@ class ProductsManage extends React.Component {
     e.preventDefault() 
     let objTemp = {...obj}
     if(index!='addPro'){
-      axios.patch('http://localhost:3001/products/'+ obj.id, objTemp)
+      axios.patch('https://my-server-189.herokuapp.com/products/'+ obj.id, objTemp)
       .then(response=>{
         let productsTemp = this.state.products
         productsTemp[index] = response.data
@@ -92,10 +93,10 @@ class ProductsManage extends React.Component {
       })
     }
     else{
-      axios.post('http://localhost:3001/products', objTemp)
+      axios.post('https://my-server-189.herokuapp.com/products', objTemp)
       .then(response=>{
         //console.log(response.data)
-        axios.get('http://localhost:3001/products?_page=1&_limit=1&_expand=category')
+        axios.get('https://my-server-189.herokuapp.com/products?_page=1&_limit=1&_expand=category')
         .then(response=>{
           this.props.dispatch(MesageAction('Đã thêm  '+objTemp.name+'  vào danh sách sản phẩm!'))
           this.setState({
@@ -113,13 +114,13 @@ class ProductsManage extends React.Component {
   }
   handleDel=(e,id, index)=>{
     if(e.display){
-      axios.delete('http://localhost:3001/products/'+ e.idDel)
+      axios.delete('https://my-server-189.herokuapp.com/products/'+ e.idDel)
       .then(response=>{
         let productsTemp = this.state.products
         let nameProduct = productsTemp[e.indexDel].name
         productsTemp.splice(e.indexDel, 1)
         if(productsTemp.length===0){
-          axios.get('http://localhost:3001/products?_page='+ (this.state.pagePresent- 1)+'&_limit=10&_expand=category')
+          axios.get('https://my-server-189.herokuapp.com/products?_page='+ (this.state.pagePresent- 1)+'&_limit=10&_expand=category')
           .then(response=>{
             this.setState({
               totalItems: parseInt(response.headers['x-total-count']),
@@ -127,6 +128,10 @@ class ProductsManage extends React.Component {
             })
           })
         }
+        let reportTemp = {...this.props.reportData}
+        reportTemp.amountProducts = this.state.totalItems - 1
+        console.log(reportTemp)
+        this.props.dispatch(ReportData(reportTemp))
         this.props.dispatch(GetData(productsTemp))
         ///------------set state--------------//
         this.setState({
@@ -157,7 +162,7 @@ class ProductsManage extends React.Component {
       copyState[i] = {display: 'none'}
       copyStateLabel[i] = 'CHỈNH SỬA'
     }
-    axios.get('http://localhost:3001/products?_page='+numberPage+'&_limit=10&_expand=category')
+    axios.get('https://my-server-189.herokuapp.com/products?_page='+numberPage+'&_limit=10&_expand=category')
     .then(response=>{
       this.setState({
         totalItems: parseInt(response.headers['x-total-count']),
@@ -239,7 +244,8 @@ const mapStateToProps=(state)=>{
   return{
     adminLogin: state.adminLogin,
     products: state.products,
-    adminPopup: state.adminPopup
+    adminPopup: state.adminPopup,
+    reportData: state.reportData
   }
 }
 const mapDispatchToProps=(dispatch)=>{

@@ -37,25 +37,25 @@ class Admin extends React.Component {
   	let infoLocal = localStorage.getItem('adminLogin');
   	if(infoLocal!=null && props.adminLogin===''){
   		infoLocal = infoLocal.split("|")
-  		axios.get('http://localhost:3001/adminAccounts?email='+infoLocal[0]+'&password='+infoLocal[1])
+  		axios.get('https://my-server-189.herokuapp.com/adminAccounts?email='+infoLocal[0]+'&password='+infoLocal[1])
   		.then(response=>{
   			//console.log(response.data)
   			props.dispatch(AdminLogin(response.data[0]))
   		})
   	}
   	else{
-  		axios.get('http://localhost:3001/order_details?_expand=product&_expand=order')
+  		axios.get('https://my-server-189.herokuapp.com/order_details?_expand=product&_expand=order')
 	    .then(response=>{
 	      //console.log(response.data)
 	      props.dispatch(GetOrderDetails(response.data))
 	    })
-      axios.get('http://localhost:3001/users?_page=1&_limit=1')
+      axios.get('https://my-server-189.herokuapp.com/users?_page=1&_limit=1')
       .then(response=>{
-        axios.get('http://localhost:3001/products?_page=1&_limit=1')
+        axios.get('https://my-server-189.herokuapp.com/products?_page=1&_limit=1')
         .then(response2=>{
-          axios.get('http://localhost:3001/orders?_page=1&_limit=1&statusCheckout=0')
+          axios.get('https://my-server-189.herokuapp.com/orders?_page=1&_limit=1&statusCheckout=0')
           .then(response3=>{
-            axios.get('http://localhost:3001/orders?_page=1&_limit=1&statusCheckout=1')
+            axios.get('https://my-server-189.herokuapp.com/orders?_page=1&_limit=1&statusCheckout=1')
             .then(response4=>{
               let reportTemp = {...props.reportData}
               reportTemp.amountUsers = response.headers['x-total-count']
@@ -73,7 +73,7 @@ class Admin extends React.Component {
   }
   handleLogin=(e, obj)=>{
   	e.preventDefault()
-  	axios.get('http://localhost:3001/adminAccounts?email='+obj.email+'&password='+obj.password)
+  	axios.get('https://my-server-189.herokuapp.com/adminAccounts?email='+obj.email+'&password='+obj.password)
     .then(response=>{
       console.log(response.data)
       if(response.data.length>0){

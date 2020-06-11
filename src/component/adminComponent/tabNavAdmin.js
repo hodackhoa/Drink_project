@@ -4,13 +4,15 @@ import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom
 import {StopRedirect} from '../../action'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
+import MediaQuery from 'react-responsive'
 
 class TabNavAdmin extends React.Component {
 	constructor(props){
     super(props);
     this.state={
       redirectLink: null,
-      showNav: {display: ''}
+      showNav: {display: ''},
+      showNav480: {display: 'none'}
     }
   }
   static getDerivedStateFromProps(props, state){
@@ -41,16 +43,14 @@ class TabNavAdmin extends React.Component {
     arrLiTab[this.props.indexTabManage].style.borderTop = '3px solid  rgba(231, 173, 73,1)'
   }
   handleShowNavMenu=(e)=>{
+    console.log(e.target)
     this.setState({
-      showNav: (this.state.showNav.display==='block')?{display: 'none'}:{display: 'block'}
+      showNav480: (this.state.showNav480.display==='block')?{display: 'none'}:{display: 'block'}
     })
   }
   render(){
     let condiLink = (this.state.redirectLink!==null)? <Redirect to={this.state.redirectLink}/> : null
-    return (
-	    <div className="tabNavAdmin">
-        <button id= 'menu480Admin' onClick={this.handleShowNavMenu}><FontAwesomeIcon icon={faBars}/></button>
-        <nav style={this.state.showNav}>
+    const ulMenu = (
           <ul>
             <li id='/admin/dashBoard' onClick={this.handleRedirect}>DASHBOARD</li>
             <li id='/admin/productsManage' onClick={this.handleRedirect}>SẢN PHẨM</li>
@@ -59,9 +59,25 @@ class TabNavAdmin extends React.Component {
             <li id='/admin/categoryManage' onClick={this.handleRedirect}>CÁC LOẠI RƯỢU</li>
             <li id='/admin/reviewManage' onClick={this.handleRedirect}>ĐÁNH GIÁ SẢN PHẨM</li>
           </ul>
-        </nav>
+      )
+    const resposiveMenu =()=> (
+      <div className="tabNavAdmin">
+        <MediaQuery minDeviceWidth={640}>
+          <nav style={this.state.showNav}>
+            {ulMenu}
+          </nav>
+        </MediaQuery>
+        <MediaQuery minDeviceWidth={480} maxDeviceWidth={639}>
+          <button id= 'menu480Admin' onClick={this.handleShowNavMenu}><FontAwesomeIcon icon={faBars}/></button>
+          <nav style={this.state.showNav480}>
+            {ulMenu}
+          </nav>
+        </MediaQuery>
         {condiLink}
-	    </div>
+      </div>
+    )
+    return (
+	   resposiveMenu()
     );
   }
 }
